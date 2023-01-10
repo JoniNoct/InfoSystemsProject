@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>microblog</title>
+  </head>
+  <body>
+  <label>input item</label>
+  <form action = "\projects\{{project_id}}\item_add" method="post">
+    <input type = "text" id="item" name="item">
+      <button type="submit">Submit</button>
+  </form>
+   <label>items:</label>
+    {% for item in data %}
+      <form action = "\projects\{{project_id}}\delete_item" method="post">
+        <label>{{item.item}}</label>
+        <button type="submit" name ="delete_files" value="{{item.item_id}}">X</button>
+      </form>
+    {% endfor %}
+  <script>
+</script>
+  </body>
+</html>
