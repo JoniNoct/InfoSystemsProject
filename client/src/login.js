@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./App.css";
 import React, { Component } from "react";
 import { setAuthToken } from "./setAuth";
+import jwt_decode from 'jwt-decode';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class Login extends React.Component {
@@ -46,11 +47,13 @@ class Login extends React.Component {
         const token  =  response.data.access_token;
         //set JWT token to local
         console.log(token)
+        const decodedToken= jwt_decode(token)
+        console.log(decodedToken)
         localStorage.setItem("token", token);
-  
+        localStorage.setItem('permissions', decodedToken.sub);
         //set token to axios common header
         setAuthToken(token);
-        window.location.href = '/projects'
+        window.location.href = '/'
       
        
       }) 

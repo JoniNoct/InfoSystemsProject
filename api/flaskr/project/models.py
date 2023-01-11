@@ -15,6 +15,7 @@ class TodoList(db.Model):
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    phone_number = db.Column(db.String(80))
     user_id = db.Column(db.Integer)
     time = db.Column(db.String(80))
     number = db.Column(db.Integer)
