@@ -27,7 +27,7 @@ class Register extends React.Component {
         //set JWT token to local
 
   
- window.location.href = '/projects'
+ window.location.href = '/login'
        
       }) 
       .catch(err => console.log(err));
