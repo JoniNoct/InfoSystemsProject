@@ -19,6 +19,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import CommonApp from "./CommonApp";
+import Menu from "./Menu";
 
 const logout = function(){
   localStorage.clear()
@@ -121,16 +122,13 @@ class App extends React.Component {
             <Link to="/login">Login</Link>
             </li>
             <li>
-            <Link to="/menu">Login</Link>
-            </li>
-            <li>
             <Logout></Logout>
             </li>
           </ul>
          
           <Switch>
            
-          <Route exact path="/menu"></Route>
+        
         
             {/* <Route exact path="/projects" component={Projects}></Route> */}
             <PrivateAdminRoute
