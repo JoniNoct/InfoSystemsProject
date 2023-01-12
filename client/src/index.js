@@ -121,13 +121,16 @@ class App extends React.Component {
             <Link to="/login">Login</Link>
             </li>
             <li>
+            <Link to="/menu">Login</Link>
+            </li>
+            <li>
             <Logout></Logout>
             </li>
           </ul>
          
           <Switch>
            
-            
+          <Route exact path="/menu"></Route>
         
             {/* <Route exact path="/projects" component={Projects}></Route> */}
             <PrivateAdminRoute
