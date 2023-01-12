@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { BrowserRouter as  Link } from "react-router-dom";
 
-class Projects extends React.Component {
+class CommonApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "", list: [],table:[0,1,2,3] };
@@ -12,19 +12,18 @@ class Projects extends React.Component {
 
   printState() {
 
-      let l = [{number:0,time:"--",phone:"--"},{number:1,time:"--",phone:"--"},{number:2,time:"--",phone:"--"},{number:3,time:"--",phone:"--"}]
+      let l = [{number:0,time:"--"},{number:1,time:"--"},{number:2,time:"--"},{number:3,time:"--"}]
       console.log(l)
       for(let i=0;i<this.state.table.length;i++){
         console.log(i)
         if (this.state.list.find(k=>k.number==i)!==undefined){
-          l[i]={number:i,time:this.state.list.find(k=>k.number==i).time,phone:this.state.list.find(k=>k.number==i).phone}
+          l[i]={number:i,time:this.state.list.find(k=>k.number==i).time}
         } 
       }
       console.log(l)
       let a = this.state.table.map((value) => (
-      <li key={value} className="MyLi">{"номер стола "+(value+1)},{"номер телефону "+l.find(i=>i.number==value).phone},{"зарезервовано з:"+l.find(i=>i.number==value).time}
+      <li key={value} className="MyLi">{"номер стола "+(value+1)},{"зарезервовано з:"+l.find(i=>i.number==value).time}
       <Table disabled={l.find(i=>i.number==value).time!="--"} onClick={this.handleTable(value)} />
-      <MyButton_del onClick={this.handleDelete(value)} />
       </li>)
       )
       l=[]
@@ -138,4 +137,4 @@ class Input extends React.Component {
 }
 
 
-export default Projects;
+export default CommonApp;

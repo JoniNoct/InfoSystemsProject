@@ -20,7 +20,8 @@ def root(user):
         
         return {'data':
                     [{"number":i.number,
-                    "time": i.time}
+                    "time": i.time,
+                    "phone": i.phone_number}
                     for i in booking]},\
             200
     else:
@@ -29,7 +30,7 @@ def root(user):
 @token_required
 def put_project(user):
     print(flask.request.json)
-    db.session.add(Booking(user_id=user.id,time=flask.request.json['name'],number=flask.request.json["id"]))
+    db.session.add(Booking(user_id=user.id,time=flask.request.json['name'],number=flask.request.json["id"],phone_number=user.phone))
     db.session.commit()
     return 'ok',200
 
@@ -39,30 +40,5 @@ def put_project(user):
 def delete_project(user):
     print(flask.request.json['id'])
     Booking.query.filter_by(number = flask.request.json['id']).delete()
-    db.session.commit()
-    return 'ok',200
-
-@bp.route('/projects/<id>')
-def todolist(id):
-
-    items_list = db.session.query(TodoList).filter_by(project_id = id).all()
-    return {'items': [{"project_id":i.project_id,
-                       "item_id":i.item_id,"user_id":i.user_id,
-                       "item": i.item}
-                      for i in items_list]},\
-           200
-#
-#
-@bp.route('/projects/<id>/item_add', methods=["POST"])
-def put_item(id):
-
-    db.session.add(TodoList(project_id =id,item=flask.request.json['item']))
-    db.session.commit()
-    return 'ok',200
-#
-#
-@bp.route('/projects/<id>/delete_item', methods=["POST"])
-def delete_item(id):
-    TodoList.query.filter_by(project_id=id,item= flask.request.json['item']).delete()
     db.session.commit()
     return 'ok',200

@@ -86,11 +86,14 @@ def token_required(f):
 def signup_user(): 
    data = request.get_json() 
    hashed_password = data['password']
-    
-   new_user = Users(username=data['username'], password=hashed_password)
-   db.session.add(new_user) 
-   db.session.commit()   
-   return jsonify({'message': 'registered successfully'})   
+   if (not Users.query.filter_by(username=data['username']).first()):
+      new_user = Users(username=data['username'], password=hashed_password,phone=data["phone"])
+      db.session.add(new_user) 
+      db.session.commit()   
+      return jsonify({'message': 'registered successfully'})   
+   else:
+      return ('could not verify',  409, {'Authentication': '"login required"'})
+ 
 
 @bp.route('/login', methods=['POST']) 
 def login_user():

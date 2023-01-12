@@ -18,6 +18,7 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
+import CommonApp from "./CommonApp";
 
 const logout = function(){
   localStorage.clear()
@@ -25,6 +26,7 @@ const logout = function(){
 }
 
 const token = localStorage.getItem("token");
+console.log(localStorage.getItem("permissions"))
 if (token) {
     setAuthToken(token);
 }
@@ -73,6 +75,32 @@ class PrivateRoute extends React.Component {
   }
 }
 
+class PrivateAdminRoute extends React.Component {
+  render() {
+    const { children,...rest } = this.props;
+    let auth = localStorage.getItem("permissions");
+    return (
+      <Route
+      {...rest} 
+      render={
+        ({ location }) => (
+          auth=='admin'
+            ? (
+              children
+            ) : (
+              <Redirect 
+                to={{
+                  pathname: '/',
+                  state: { from: location }
+                }}
+              />
+            ))
+      }
+    />
+    );
+  }
+}
+
 class App extends React.Component {
   render() {
     return (
@@ -80,8 +108,9 @@ class App extends React.Component {
         <div >
           <ul id='navbar'>
             <li>
-              <Link to="/projects">Projects</Link>
+              <Link to="/">Reservation</Link>
             </li>
+          
             
             <li >
             <Link to="/register">Register</Link>
@@ -92,24 +121,28 @@ class App extends React.Component {
             <Link to="/login">Login</Link>
             </li>
             <li>
+            <Link to="/menu">Login</Link>
+            </li>
+            <li>
             <Logout></Logout>
             </li>
           </ul>
          
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            
+           
+          <Route exact path="/menu"></Route>
         
             {/* <Route exact path="/projects" component={Projects}></Route> */}
+            <PrivateAdminRoute
+              exact
+              path="/admin"
+            >  {" "}
+            <Projects />{" "}</PrivateAdminRoute>
             <PrivateRoute
               exact
-              path="/projects"
+              path="/"
             >  {" "}
-            <Projects />{" "}</PrivateRoute>
-            <Route exact path="/projects/:id" component={Items}>
-            </Route>
+            <CommonApp />{" "}</PrivateRoute>
             <Route exact path="/register" component={Register}></Route>
             <Route exact path="/login">
               {" "}
